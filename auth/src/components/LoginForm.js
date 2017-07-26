@@ -3,15 +3,15 @@ import firebase from 'firebase';
 import { Button, Card, CardSection, Input, Text, Spinner } from './common';
 
 class LoginForm extends Component {
-  state ={
+  state = {
     email: '',
     password: '',
-    error: '',
-    loading: 'false'
+    error: 'the',
+    loading: false
   };
 
   onButtonPress() {
-    const { email, password } = this.sate;
+    const { email, password } = this.state;
 
     this.setState({ error: '', loading: true });
 
@@ -43,13 +43,12 @@ class LoginForm extends Component {
   renderButton() {
     if (this.state.loading) {
       return <Spinner size={'small'} />;
-    } else {
+    }
       return (
         <Button onPress={this.onButtonPress.bind(this)}>
           Log In
         </Button>
       );
-    }
   }
 
   render() {
@@ -73,8 +72,6 @@ class LoginForm extends Component {
             onChangeText={password => this.setState({ password })}
           />
         </CardSection>
-
-        <Text style={styles.errorTextStyle}>{this.state.error}</Text>
 
         <CardSection>
           {this.renderButton()}
