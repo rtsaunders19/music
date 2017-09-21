@@ -1,18 +1,46 @@
-import React from 'react';
-import { View } from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
-import { Header } from './components/common';
+import React, { Component } from 'react';
+import GoogleMapReact from 'google-map-react';
 
-const App = () => {
+
+const AnyReactComponent = ({  img_src }) => <div><img src={img_src} className="YOUR-CLASS-NAME" style={{}} /></div>;
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      markers: []
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      markers: [{ lat: 29.7, lng: 95.3, img_src: 'https://openclipart.org/image/2400px/svg_to_png/169839/map-pin.png' }]
+    });
+  }
+
+  render() {
   return (
-    <Provider store={createStore(reducers)}>
-      <View>
-        <Header headerText="Tech Stack" />
-      </View>
-    </Provider>
+    <GoogleMapReact
+      defaultCenter={this.props.center}
+      defaultZoom={this.props.zoom}
+      style={{ height: '300px' }}
+    >
+
+      {this.state.markers.map((marker, i) => {
+              return (
+                <AnyReactComponent
+                  lat={marker.lat}
+                  lng={marker.lng}
+                  img_src={marker.img_src}
+                />
+
+              );
+            })}
+
+    </GoogleMapReact>
+
   );
-};
+ }
+}
 
 export default App;
